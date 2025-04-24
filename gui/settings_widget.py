@@ -7,6 +7,7 @@
 
 import logging
 from pathlib import Path
+from config.settings import AppSettings
 
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
@@ -164,15 +165,17 @@ class SettingsWidget(QWidget):
 
     def load_settings(self):
         """Завантажує збережені налаштування."""
-        # В реальному додатку тут буде завантаження з конфігураційного файлу
-        # Це демонстраційний код
+        from config.settings import AppSettings
+        settings = AppSettings()
+
         self.logger.info("Loading settings")
 
-        # Демонстраційні значення
-        self.spreadsheet_id_edit.setText("")
-        self.sheet_name_edit.setText("Завантаження відео")
-        self.theme_combo.setCurrentText("Системна")
-        self.temp_path_edit.setText(str(Path.home() / "temp"))
+        # Завантаження збережених налаштувань
+        self.spreadsheet_id_edit.setText(settings.get("sheets", "spreadsheet_id", ""))
+        self.sheet_name_edit.setText(settings.get("sheets", "sheet_name", "Завантаження відео"))
+        self.create_sheet_check.setChecked(settings.get("sheets", "create_if_not_exists", True))
+        self.theme_combo.setCurrentText(settings.get("general", "theme", "Системна"))
+        self.temp_path_edit.setText(settings.get("general", "temp_path", str(Path.home() / "temp")))
 
     def save_settings(self):
         """Зберігає поточні налаштування."""
@@ -180,22 +183,34 @@ class SettingsWidget(QWidget):
 
         # Збір налаштувань
         settings = {
-            'spreadsheet_id': self.spreadsheet_id_edit.text(),
-            'sheet_name': self.sheet_name_edit.text(),
-            'create_if_not_exists': self.create_sheet_check.isChecked(),
-            'theme': self.theme_combo.currentText(),
-            'temp_path': self.temp_path_edit.text()
+            'sheets.spreadsheet_id': self.spreadsheet_id_edit.text(),
+            'sheets.sheet_name': self.sheet_name_edit.text(),
+            'sheets.create_if_not_exists': self.create_sheet_check.isChecked(),
+            'general.theme': self.theme_combo.currentText(),
+            'general.temp_path': self.temp_path_edit.text()
         }
 
-        # В реальному додатку тут буде збереження в конфігураційний файл
-        self.logger.info(f"Would save settings: {settings}")
+        # Імпорт класу налаштувань
+        from config.settings import AppSettings
+        app_settings = AppSettings()
+
+        # Оновлення та збереження налаштувань
+        app_settings.update(settings)
+        success = app_settings.save()
 
         # Сповіщення користувача
-        QMessageBox.information(
-            self,
-            "Налаштування",
-            "Налаштування успішно збережено."
-        )
+        if success:
+            QMessageBox.information(
+                self,
+                "Налаштування",
+                "Налаштування успішно збережено."
+            )
+        else:
+            QMessageBox.warning(
+                self,
+                "Помилка",
+                "Не вдалося зберегти налаштування."
+            )
 
         # Емісія сигналу про збереження налаштувань
         self.settings_saved.emit(settings)
