@@ -9,7 +9,7 @@
 </div>
 
 <p align="center">
-  <img src="https://i.imgur.com/example.png" alt="YouTube Uploader Screenshot" width="600"/>
+  <img src="[https://i.imgur.com/example.png](https://imgur.com/a/1iQ37ns)" alt="YouTube Uploader Screenshot" width="600"/>
 </p>
 
 > Десктопний додаток на Python для автоматизації процесу завантаження відеоконтенту на платформу YouTube з подальшим записом метаданих про завантаження у таблиці Google Sheets.
