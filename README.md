@@ -9,7 +9,7 @@
 </div>
 
 <p align="center">
-  <img src="https://imgur.com/a/1iQ37ns" alt="YouTube Uploader Screenshot" width="600"/>
+  <img src="https://imgur.com/5dbumr1" alt="YouTube Uploader Screenshot" width="600"/>
 </p>
 
 > Десктопний додаток на Python для автоматизації процесу завантаження відеоконтенту на платформу YouTube з подальшим записом метаданих про завантаження у таблиці Google Sheets.
@@ -193,15 +193,6 @@ pyinstaller --onefile --windowed --icon=resources/icon.ico main.py
 ## 📜 Ліцензія
 
 Цей проект розповсюджується під ліцензією MIT. Детальніше дивіться у файлі [LICENSE](LICENSE).
-
-## 👨‍💻 Автори
-
-- Ваше ім'я - [GitHub](https://github.com/yourusername)
-
-## 🙏 Подяки
-
-- [PyQt6](https://www.riverbankcomputing.com/software/pyqt/download) - за потужний фреймворк для створення GUI
-- [Google API Python Client](https://github.com/googleapis/google-api-python-client) - за інструменти для роботи з API Google
 
 ---
 
